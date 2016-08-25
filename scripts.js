@@ -9,13 +9,13 @@ var h3 = document.querySelector('h3');
 var min = 0;
 var max = 100;
 
-var answer = generateRandom();
+var answer = generateRandomNumber();
 
 // generates random number
-function generateRandom(number) {
+function generateRandomNumber(number) {
   return Math.floor((Math.random() * 100) + 1);
 }
-console.log(answer);
+console.log('random number ' + answer);
 
 // turn number into an integer
 function convertToInt(number) {
@@ -43,30 +43,26 @@ function checkGuess(number) {
   }
 }
 
-// function guessFeedback() {
-//   if (userInt > answer) {
-//     feedBack.innerText = 'Sorry, your guess is too high. Try something lower.';
-//   } else if (userInt < answer) {
-//     feedBack.innerText = 'Sorry, your guess is too low. Try something lower.';
-//   } else {
-//     return false;
-//   }
-// }
-
 // actions when user's guess is correct
 function correctAnswer(number) {
   if (answer === number) {
-    alert('Congratulations, you win! New game started.');
-    feedBack.innerText = ('Congratulations, you win! New game started.');
+    feedBack.innerText = ('Congratulations, you win! New game started, and it\'s harder this time, the min and max have changed.');
+    lastGuess.style.color = '#ff5050';
     min = min - 10;
     max = max + 10;
-    answer = generateRandom();
-    console.log(answer);
+    answer = generateRandomNumber();
+    console.log('new random num: ' + answer);
     clearInput();
   } else {
     return false;
   }
 }
+
+// runs game when Guess button is clicked
+guessButton.addEventListener('click', function() {
+  gameTime();
+  clearInput();
+});
 
 // main game function, runs when Guess button is clicked
 function gameTime() {
@@ -88,12 +84,6 @@ function gameTime() {
   correctAnswer(userInt);
 }
 
-// runs game when Guess button is clicked
-guessButton.addEventListener('click', function() {
-  gameTime();
-  clearInput();
-});
-
 
 // clear button resets input field
 clearButton.addEventListener('click', function() {
@@ -102,7 +92,7 @@ clearButton.addEventListener('click', function() {
 
 // new game button resets game
 newGameButton.addEventListener('click', function() {
-  generateRandom();
+  answer = generateRandomNumber();
   lastGuess.innerText = ('___');
   guessField.value = '';
   h3.innerText = 'Make Your Guess';
