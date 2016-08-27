@@ -62,13 +62,19 @@ function correctAnswer(number) {
     console.log('new random num: ' + answer);
     clearInput();
   } else {
+    lastGuess.style.color = 'black';
     return false;
   }
 }
 
-// runs game when Guess button is clicked
 guessButton.addEventListener('click', function() {
   gameTime();
+});
+
+guessField.addEventListener('keydown', function(e) {
+  if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+    gameTime();
+  }
 });
 
 // main game function, runs when Guess button is clicked
@@ -118,7 +124,7 @@ changeRangeButton.addEventListener('click', function() {
   min = minInputField.value;
   max = maxInputField.value;
   answer = generateRandomNumber();
-  console.log('new ran num' + answer);
+  console.log('new number/range: ' + answer);
 });
 
 clearRangeButton.addEventListener('click', function() {
