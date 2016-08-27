@@ -2,9 +2,15 @@ var guessField = document.querySelector('#guess');
 var guessButton = document.querySelector('#guess-button');
 var clearButton = document.querySelector('#clear-button');
 var newGameButton = document.querySelector('#reset-button');
+var changeRangeButton = document.querySelector('#change-range');
+var clearRangeButton = document.querySelector('#clear-range');
 var lastGuess = document.querySelector('#last-guess');
 var feedBack = document.querySelector('#feedback');
 var h3 = document.querySelector('h3');
+var currentMin = document.querySelector('#current-min');
+var currentMax = document.querySelector('#current-max');
+var minInputField = document.querySelector('#min');
+var maxInputField = document.querySelector('#max');
 
 var min = 0;
 var max = 100;
@@ -46,10 +52,13 @@ function checkGuess(number) {
 // actions when user's guess is correct
 function correctAnswer(number) {
   if (answer === number) {
-    feedBack.innerText = ('Congratulations, you win! New game started, and it\'s harder this time, the min and max have changed.');
+    h3.innerText = 'Congratulations, you win! The winning number: '
+    feedBack.innerText = ('New game started, and it\'s harder this time, the MIN and MAX have changed.');
     lastGuess.style.color = '#ff5050';
     min = min - 10;
     max = max + 10;
+    currentMin.innerText = min;
+    currentMax.innerText = max;
     answer = generateRandomNumber();
     console.log('new random num: ' + answer);
     clearInput();
@@ -85,16 +94,29 @@ function gameTime() {
 }
 
 
-// clear button resets input field
 clearButton.addEventListener('click', function() {
    clearInput();
 });
 
-// new game button resets game
 newGameButton.addEventListener('click', function() {
   answer = generateRandomNumber();
-  lastGuess.innerText = ('___');
+  lastGuess.innerText = '';
+  lastGuess.style.color = 'black';
   guessField.value = '';
   h3.innerText = 'Make Your Guess';
   feedBack.innerText = 'New Game Started';
+});
+
+changeRangeButton.addEventListener('click', function() {
+  currentMin.innerText = minInputField.value;
+  currentMax.innerText = maxInputField.value;
+  answer = generateRandomNumber();
+  console.log('new ran num' + answer);
+});
+
+clearRangeButton.addEventListener('click', function() {
+  minInputField.value = '';
+  maxInputField.value = '';
+  currentMin = min;
+  currentMax = max;
 });
