@@ -30,11 +30,19 @@
       <button type="button" id="guess-button">Guess</button>
       <button type="button" id="clear-button">Clear</button>
       <button type="button" id="reset-button">New Game</button>
-
     </section>
 
-    <input type="text" placeholder="Min" id="min">
-    <input type="text" placeholder="Max" id="max">
+    <section id="current-range">
+      <span>Current Range:</span>
+      <div>
+        <span id="current-min">0</span>
+        <span> - </span>
+        <span id="current-max">100</span>
+      </div>
+    </section>
+
+    <input type="number" placeholder="Min" id="min">
+    <input type="number" placeholder="Max" id="max">
 
     <section>
       <button type="button" id="change-range">Change Range</button>

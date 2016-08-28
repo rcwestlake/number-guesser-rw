@@ -65,6 +65,20 @@ button:focus {
   outline: none;
 }
 
+button:disabled {
+  color: black;
+  background-color: lightgray;
+}
+
+#current-range {
+  margin: 20px auto;
+}
+
+#current-range div {
+  display: block;
+  margin-top: 10px;
+}
+
 #reset-button{
   display: block;
   margin: auto;
