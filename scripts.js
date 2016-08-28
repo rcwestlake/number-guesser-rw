@@ -32,6 +32,7 @@ function clearInput() {
   guessField.value = '';
 }
 
+
 // checks to see if user input is a number and within the range
 function checkGuess(number) {
   if(isNaN(convertToInt(number))) {
@@ -61,6 +62,7 @@ function correctAnswer(number) {
     answer = generateRandomNumber();
     console.log('new random num: ' + answer);
     clearInput();
+    newGameButton.disabled = true;
   } else {
     lastGuess.style.color = 'black';
     return false;
@@ -77,6 +79,24 @@ guessField.addEventListener('keydown', function(e) {
   }
 });
 
+// disable/enable button controls
+newGameButton.disabled = true;
+
+if (guessField.value === '') {
+  guessButton.disabled = true;
+  clearButton.disabled = true;
+}
+
+guessField.addEventListener('keyup', function() {
+  if (guessField.value !== '') {
+  guessButton.disabled = false;
+  clearButton.disabled = false;
+  } else {
+    guessButton.disabled = true;
+    clearButton.disabled = true;
+  }
+});
+
 // main game function, runs when Guess button is clicked
 function gameTime() {
   var userGuess = guessField.value;
@@ -88,6 +108,8 @@ function gameTime() {
     return false;
   }
 
+  newGameButton.disabled = false;
+
   h3.innerText = 'Your last guess was:';
   lastGuess.innerText = userInt;
 
@@ -98,6 +120,8 @@ function gameTime() {
   }
   clearInput();
   correctAnswer(userInt);
+  guessButton.disabled = true;
+  clearButton.disabled = true;
 }
 
 
@@ -106,7 +130,6 @@ clearButton.addEventListener('click', function() {
 });
 
 newGameButton.addEventListener('click', function() {
-  answer = generateRandomNumber();
   lastGuess.innerText = '';
   lastGuess.style.color = 'black';
   guessField.value = '';
@@ -114,8 +137,11 @@ newGameButton.addEventListener('click', function() {
   feedBack.innerText = 'New Game Started';
   min = 0;
   max = 100;
-  currentMin.innerText = min;
-  currentMax.innerText = max;
+  currentMin.innerText = 0;
+  currentMax.innerText = 100;
+  minInputField.value = '';
+  maxInputField.value = '';
+  answer = generateRandomNumber();
 });
 
 changeRangeButton.addEventListener('click', function() {
