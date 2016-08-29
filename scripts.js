@@ -18,7 +18,7 @@ var max = 100;
 var answer = generateRandomNumber();
 
 // generates random number
-function generateRandomNumber(number) {
+function generateRandomNumber() {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 console.log('random number ' + answer);
@@ -32,6 +32,26 @@ function clearInput() {
   guessField.value = '';
 }
 
+function changeMinMaxText(currentMinText, currentMaxText) {
+  currentMin.innerText = currentMinText;
+  currentMax.innerText = currentMaxText;
+}
+
+function changeGuessButtonClickablity(boolean) {
+  guessButton.disabled = boolean;
+}
+
+function changeClearButtonClickablity(boolean) {
+  clearButton.disabled = boolean;
+}
+
+function resetGameText() {
+  lastGuess.innerText = '';
+  lastGuess.style.color = 'black';
+  guessField.value = '';
+  h3.innerText = 'Make Your Guess';
+  feedBack.innerText = 'New Game Started';
+}
 
 // checks to see if user input is a number and within the range
 function checkGuess(number) {
@@ -57,8 +77,7 @@ function correctAnswer(number) {
     lastGuess.style.color = '#ff5050';
     min = min - 10;
     max = max + 10;
-    currentMin.innerText = min;
-    currentMax.innerText = max;
+    changeMinMaxText(min, max);
     answer = generateRandomNumber();
     console.log('new random num: ' + answer);
     clearInput();
@@ -83,17 +102,17 @@ guessField.addEventListener('keydown', function(e) {
 newGameButton.disabled = true;
 
 if (guessField.value === '') {
-  guessButton.disabled = true;
-  clearButton.disabled = true;
+  changeGuessButtonClickablity(true);
+  changeClearButtonClickablity(true);
 }
 
 guessField.addEventListener('keyup', function() {
   if (guessField.value !== '') {
-  guessButton.disabled = false;
-  clearButton.disabled = false;
+  changeGuessButtonClickablity(false);
+  changeClearButtonClickablity(false);
   } else {
-    guessButton.disabled = true;
-    clearButton.disabled = true;
+    changeGuessButtonClickablity(true);
+    changeClearButtonClickablity(true);
   }
 });
 
@@ -120,8 +139,8 @@ function gameTime() {
   }
   clearInput();
   correctAnswer(userInt);
-  guessButton.disabled = true;
-  clearButton.disabled = true;
+  changeGuessButtonClickablity(true);
+  changeClearButtonClickablity(true);
 }
 
 
@@ -130,25 +149,19 @@ clearButton.addEventListener('click', function() {
 });
 
 newGameButton.addEventListener('click', function() {
-  lastGuess.innerText = '';
-  lastGuess.style.color = 'black';
-  guessField.value = '';
-  h3.innerText = 'Make Your Guess';
-  feedBack.innerText = 'New Game Started';
+  resetGameText();
   min = 0;
   max = 100;
-  currentMin.innerText = 0;
-  currentMax.innerText = 100;
+  changeMinMaxText(0, 100);
   minInputField.value = '';
   maxInputField.value = '';
   answer = generateRandomNumber();
 });
 
 changeRangeButton.addEventListener('click', function() {
-  currentMin.innerText = minInputField.value;
-  currentMax.innerText = maxInputField.value;
-  min = minInputField.value;
-  max = maxInputField.value;
+  changeMinMaxText(minInputField.value, maxInputField.value);
+  min = convertToInt(minInputField.value);
+  max = convertToInt(maxInputField.value);
   answer = generateRandomNumber();
   console.log('new number/range: ' + answer);
 });
